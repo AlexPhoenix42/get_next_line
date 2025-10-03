@@ -44,7 +44,6 @@ char    *get_next_line(int fd)
 		line = ft_strjoin(&line, buf, ft_strlen(line), ft_strlen2(buf));
 		ft_shift_buf(buf, tmp);
 		return (line);
-		tmp = NULL;
 	}
 	if (buf[0])
 		line = ft_strjoin(&line, buf, ft_strlen(line), ft_strlen(buf));
