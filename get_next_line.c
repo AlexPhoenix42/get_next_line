@@ -55,8 +55,8 @@ char    *get_next_line(int fd)
 		{
 			free(tmp);
 			tmp = NULL;
-			ft_bzero(buf, BUFFER_SIZE);
-			return (line);
+			free(line);
+			return (NULL);
 		}
 		line = ft_strjoin(&line, buf, ft_strlen(line), ft_strlen2(buf));
     	tmp  = ft_strchr(buf, '\n');
