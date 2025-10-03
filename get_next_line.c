@@ -61,10 +61,7 @@ char    *get_next_line(int fd)
     	tmp  = ft_strchr(buf, '\n');
     }
 	if (tmp)
-	{
 		ft_shift_buf(buf, tmp);
-		return (line);
-	}
 	return (line);
 }
 
