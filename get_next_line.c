@@ -25,7 +25,6 @@
 char    *ft_strchr(char *str, char c);
 char	*ft_strjoin(char **ss1, char *s2, size_t len1, size_t len2);
 size_t	ft_strlen2(char *str, int c);
-size_t	ft_strlen(char *str);
 char	*ft_shift_buf(char *buf, char *ptr);
 char	*ft_strndup(char *src, size_t n);
 void	ft_bzero(char *buf, size_t len);
