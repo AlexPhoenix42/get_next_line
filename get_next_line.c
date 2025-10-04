@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <stdbool.h>
 
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 32
@@ -23,7 +24,7 @@
 
 char    *ft_strchr(char *str, char c);
 char	*ft_strjoin(char **ss1, char *s2, size_t len1, size_t len2);
-size_t	ft_strlen2(char *str);
+size_t	ft_strlen2(char *str, int c);
 size_t	ft_strlen(char *str);
 char	*ft_shift_buf(char *buf, char *ptr);
 char	*ft_strndup(char *src, size_t n);
@@ -41,13 +42,12 @@ char    *get_next_line(int fd)
     char *tmp  = ft_strchr(buf, '\n');
 	if (tmp)
 	{
-		line = ft_strjoin(&line, buf, ft_strlen(line), ft_strlen2(buf));
+		line = ft_strjoin(&line, buf, ft_strlen2(line, 0), ft_strlen2(buf, '\n'));
 		ft_shift_buf(buf, tmp);
 		return (line);
-		tmp = NULL;
 	}
 	if (buf[0])
-		line = ft_strjoin(&line, buf, ft_strlen(line), ft_strlen(buf));
+		line = ft_strjoin(&line, buf, ft_strlen2(line, 0), ft_strlen2(buf, 0));
     while (!tmp)
     {
     	byt_r = read(fd, buf, BUFFER_SIZE);
@@ -58,7 +58,7 @@ char    *get_next_line(int fd)
 			ft_bzero(buf, BUFFER_SIZE);
 			return (NULL);
 		}
-		line = ft_strjoin(&line, buf, ft_strlen(line), ft_strlen2(buf));
+		line = ft_strjoin(&line, buf, ft_strlen2(line, 0), ft_strlen2(buf, '\n'));
     	tmp  = ft_strchr(buf, '\n');
     }
 	if (tmp)
@@ -130,28 +130,19 @@ char	*ft_strjoin(char **ss1, char *s2, size_t len1, size_t len2)
 	return (str);	
 }
 
-size_t	ft_strlen(char *str)
+size_t	ft_strlen2(char *str, int c)
 {
 	size_t	len;
 
 	if (!str)
 		return (0);
 	len = -1;
-	while (str[++len])
+	while (str[++len] && str[len] != c)
 		;
-	return (len);
-}
-
-size_t	ft_strlen2(char *str)
-{
-	size_t	len;
-
-	if (!str)
-		return (0);
-	len = -1;
-	while (str[++len] && str[len] != '\n')
-		;
-	return (len + 1);
+	if (c)
+		return (len + 1);
+	else
+		return (len);
 }
 
 char    *ft_strchr(char *str, char c)
